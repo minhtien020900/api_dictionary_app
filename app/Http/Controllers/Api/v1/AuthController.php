@@ -17,7 +17,7 @@ class AuthController extends BaseController
 
         if (isset($request->validator) && $request->validator->fails()) {
             $errors = $request->validator->messages();
-            return $this->sendResponse(config('api_custom.have_error'), $errors, null,config('api_custom.422'));
+            return $this->sendResponse(config('api_custom.have_error'), $errors, null,config('api_custom.status_code.422'));
         }
 
 
@@ -30,7 +30,7 @@ class AuthController extends BaseController
         );
 
         $data = ['token' => $user->createToken('API Token')->plainTextToken];
-        return $this->sendResponse(config('api_custom.no_have_error'), 0, $data);
+        return $this->sendResponse(config('api_custom.no_have_error'), 0, $data,config('api_custom.status_code.200'));
     }
 
     public function login(Request $request)
