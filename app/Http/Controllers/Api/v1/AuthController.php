@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends BaseController
 {
@@ -16,7 +17,7 @@ class AuthController extends BaseController
 
         if (isset($request->validator) && $request->validator->fails()) {
             $errors = $request->validator->messages();
-            return $this->sendResponse(config('api_custom.have_error'), $errors, null);
+            return $this->sendResponse(config('api_custom.have_error'), $errors, null,config('api_custom.422'));
         }
 
 
@@ -39,19 +40,18 @@ class AuthController extends BaseController
             'password' => 'bail|required|string|min:6'
         ]);
         if ($validator->fails()) {
-            return $this->sendResponse(config('api_custom.have_error'), $validator->errors(), null);
-        };
+            return $this->sendResponse(config('api_custom.have_error'), $validator->errors(), null,config('api_custom.status_code.422'));
+        }
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-            $error_msg = trans('auth.failed');
-            return $this->sendResponse(config('api_custom.have_error'), $error_msg, null);
+            $error_msg = trans('custom_message.auth.failed');
+            return $this->sendResponse(config('api_custom.have_error'), $error_msg, null,config('api_custom.status_code.401'));
         } else {
             $data = [
                 'token' => \auth()->user()->createToken('API Token')->plainTextToken
             ];
-            return $this->sendResponse(config('api_custom.no_have_error'), null, $data);
+            return $this->sendResponse(config('api_custom.no_have_error'), null, $data,config('api_custom.status_code.200'));
         }
-
     }
 
     public function logout()
@@ -60,6 +60,6 @@ class AuthController extends BaseController
         $data = [
             'message' => 'Tokens Revoked',
         ];
-        return $this->sendResponse(config('api_custom.no_have_error'), null, $data);
+        return $this->sendResponse(config('api_custom.no_have_error'), null, $data,config('api_custom.status_code.201'));
     }
 }

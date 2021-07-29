@@ -6,13 +6,13 @@ namespace App\Http\Controllers\Api;
 
 class BaseController
 {
-    public function sendResponse($error_code,$error_message,$data)
+    public function sendResponse($error_code,$error_message,$data,$statusCode)
     {
         $response = [
             'error_code'=>$error_code,
             'error_message'=>$error_message,
             'data'=>$data,
         ];
-        return response()->json($response);
+        return response()->json($response,$statusCode);
     }
 }
