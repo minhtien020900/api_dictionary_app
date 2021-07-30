@@ -35,11 +35,11 @@ class RegisterRequest extends FormRequest
             //
             'name' => 'bail|required|string|max:255',
             'email' => 'bail|required|string|email|unique:users,email',
-            'password' => 'bail|required|min:5',
+            'password' => 'bail|required|min:5|confirmed',
             'password_confirmation' => [
                 'bail',
                 'required',
-                'same:password'
+
             ]
         ];
     }
