@@ -29,8 +29,10 @@ class AuthController extends BaseController
             ]
         );
 
-        $data = ['token' => $user->createToken('API Token')->plainTextToken];
-        return $this->sendResponse(config('api_custom.no_have_error'), 0, $data,config('api_custom.status_code.200'));
+//        $data = ['token' => $user->createToken('API Token')->plainTextToken];
+
+        $data = 'Register user successfully';
+        return $this->sendResponse(config('api_custom.no_have_error'), config('api_custom.no_have_error_msg'), $data,config('api_custom.status_code.200'));
     }
 
     public function login(Request $request)
