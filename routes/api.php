@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\WordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/me', function () {
             return auth()->user();
         });
+
+        // Get all Word
+        Route::get('/get-all-word', [WordController::class, 'getAllWord']);
     });
+
+
 });
 
