@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class WordPartsOfSpeech extends Model
 {
+
     use HasFactory;
 }
