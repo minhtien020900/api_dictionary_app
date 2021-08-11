@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\WordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,11 +25,18 @@ Route::prefix('v1')->group(function () {
         Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     });
 
-    //
+    // Get all Word
+    Route::get('/get-all-word', [WordController::class, 'getAllWord']);
+
+    // Route can guard with auth:sanctum
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/me', function () {
             return auth()->user();
         });
+
+
     });
+
+
 });
 
