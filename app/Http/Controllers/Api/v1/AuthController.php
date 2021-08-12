@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Api\BaseController;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class AuthController extends BaseController
+class AuthController extends ApiController
 {
     //
     public function register(RegisterRequest $request)
@@ -29,6 +30,11 @@ class AuthController extends BaseController
             ]
         );
 
+        $defaulTopic = new Topic(['name'=>'Default Topic','markup_default'=>true]);
+        $user->topics()->save($defaulTopic);
+
+
+
 //        $data = ['token' => $user->createToken('API Token')->plainTextToken];
 
         $data = 'Register user successfully';
@@ -37,6 +43,7 @@ class AuthController extends BaseController
 
     public function login(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'email' => 'bail|required|string|email',
             'password' => 'bail|required|string|min:6'

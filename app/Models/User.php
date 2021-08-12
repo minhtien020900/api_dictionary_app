@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Models\PersonalVocabulary;
+use App\Models\Models\Topic;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,6 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -41,4 +43,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function personal_words()
+    {
+       return $this->hasManyThrough(PersonalVocabulary::class,Topic::class,
+           'user_id','topic_id','id');
+    }
+    public function topics(){
+        return $this->hasMany(Topic::class,'user_id','id');
+    }
 }

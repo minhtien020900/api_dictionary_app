@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Api\BaseController;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\v1\WordResource;
 use App\Models\Models\Word;
 
-class WordController extends BaseController
+class WordController extends ApiController
 {
     //
     public function getAllWord()

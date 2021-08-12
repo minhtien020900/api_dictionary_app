@@ -5,19 +5,20 @@ namespace App\Http\Resources\v1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PartOfSpeechResource extends JsonResource
+class TopicResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request)
     {
         return [
-            'name' => $this->name,
-            'acronym' => $this->acronym,
+            'name'=>$this->name,
+            'markup_default'=>$this->markup_default,
+            'user'=>$this->user,
         ];
     }
 }

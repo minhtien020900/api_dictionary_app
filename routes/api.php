@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\TopicController;
 use App\Http\Controllers\Api\v1\WordController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,29 @@ Route::prefix('v1')->group(function () {
             return auth()->user();
         });
 
+        //Route for vocabulary
+        Route::prefix('vocabulary')->group(function () {
+
+            //Route for vocabulary
+            Route::prefix('topic')->group(function () {
+
+                Route::prefix('user')->group(function () {
+                    Route::get('/{user_id}/get-topic', [TopicController::class, 'getUserTopic']);
+                    Route::post('/add-topic', [TopicController::class, 'addTopic']);
+                    Route::put('/edit-topic', [TopicController::class, 'editTopic']);
+                    Route::post('/delete-topic', [TopicController::class, 'deleteTopic']);
+                });
+            });
+
+            Route::prefix('personal-word')->group(function () {
+                Route::post('/get', [\App\Http\Controllers\Api\v1\PersonalVocabularyController::class, 'index']);
+                Route::post('/add', [\App\Http\Controllers\Api\v1\PersonalVocabularyController::class, 'store']);
+                Route::put('/edit', [\App\Http\Controllers\Api\v1\PersonalVocabularyController::class, 'update']);
+                Route::post('/delete', [\App\Http\Controllers\Api\v1\PersonalVocabularyController::class, 'destroy']);
+
+
+            });
+        });
 
     });
 
