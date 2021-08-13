@@ -56,7 +56,7 @@ class TopicController extends ApiController
         $validator = Validator::make($request->all(), [
             'id' => 'bail|required',
             'name' => [
-//                'required',
+                'required',
                 Rule::unique('topics')->ignore($request->id, 'id')->
                 where(function ($query) {
                     return $query->where('user_id', \auth()->user()->id);

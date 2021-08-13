@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\PersonalVocabularyController;
 use App\Http\Controllers\Api\v1\TopicController;
 use App\Http\Controllers\Api\v1\WordController;
 use Illuminate\Support\Facades\Route;
@@ -50,10 +51,10 @@ Route::prefix('v1')->group(function () {
             });
 
             Route::prefix('personal-word')->group(function () {
-                Route::post('/get', [\App\Http\Controllers\Api\v1\PersonalVocabularyController::class, 'index']);
-                Route::post('/add', [\App\Http\Controllers\Api\v1\PersonalVocabularyController::class, 'store']);
-                Route::put('/edit', [\App\Http\Controllers\Api\v1\PersonalVocabularyController::class, 'update']);
-                Route::post('/delete', [\App\Http\Controllers\Api\v1\PersonalVocabularyController::class, 'destroy']);
+                Route::post('/get', [PersonalVocabularyController::class, 'index']);
+                Route::post('/add', [PersonalVocabularyController::class, 'store']);
+                Route::put('/edit', [PersonalVocabularyController::class, 'update']);
+                Route::post('/delete', [PersonalVocabularyController::class, 'destroy']);
 
 
             });

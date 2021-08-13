@@ -24,6 +24,7 @@ class PersonalVocabulary extends Model
 
     public function part_of_speechs()
     {
+
         return $this->morphToMany(PartOfSpeech::class, 'part_of_speech_able',
             'part_of_speechtables',
             'part_of_speech_able');
