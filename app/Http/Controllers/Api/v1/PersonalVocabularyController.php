@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use DB;
 
 class PersonalVocabularyController extends ApiController
 {
@@ -73,7 +74,7 @@ class PersonalVocabularyController extends ApiController
             // Find type part of speech and save to table part_of_speech_able
             $arr_part_of_speech = [];
             foreach ($request->part_of_speech_id as $value) {
-                $arr[] = PartOfSpeech::find($value);
+                $arr_part_of_speech[] = PartOfSpeech::find($value);
             }
             $personal_word->part_of_speechs()->saveMany($arr_part_of_speech);
 
@@ -138,12 +139,44 @@ class PersonalVocabularyController extends ApiController
         }
 
         $personal_word = PersonalVocabulary::find($request->id);
-        foreach ($request->except(['example_description']) as $attr => $value) {
-            $personal_word->$attr = $value;
-        };
-        foreach ($request->example_description as $value){
 
+        $personal_word = PersonalVocabulary::find($request->id);
+        $personal_word -> topic_id = $request->topic_id;
+        $personal_word -> word = $request->word;
+        $personal_word -> mean = $request->mean;
+        $personal_word -> pronounce = $request->pronounce;
+        $personal_word -> save();
+
+        // delete all example
+        $personal_word->examples()->delete();
+
+        // delete all part of speech
+        // $personal_word->part_of_speechs()->delete(); => this will delete records on parts_of_speeches table
+
+        DB::table('part_of_speechtables')
+        ->where('part_of_speech_able', $personal_word->id)
+        ->delete();
+    
+        // add example instead of edit
+        foreach ($request->example_description as $desc) {
+            $personal_word->examples()->save(
+                new Example([
+                        'description' => $desc,
+                        'personal_vocabulary_id' => $personal_word->id,
+                    ]
+                )
+            );
         }
+
+        // add part_of_speech instead of edit
+        $arr_part_of_speech = [];
+            foreach ($request->part_of_speech_id as $value) {
+                $arr_part_of_speech[] = PartOfSpeech::find($value);
+            }
+
+        $personal_word->part_of_speechs()->saveMany($arr_part_of_speech);
+
+        return $this->sendResponse(config('api_custom.no_have_error'), null, true, config('api_custom.status_code.200'));
 
     }
 
