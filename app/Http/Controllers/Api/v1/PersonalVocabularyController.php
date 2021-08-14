@@ -188,6 +188,16 @@ class PersonalVocabularyController extends ApiController
      */
     public function destroy($id)
     {
-        //
+        $personal_word = PersonalVocabulary::find($request->id);
+        $personal_word->delete();
+
+        $personal_word->examples()->delete();
+
+        // delete all part of speech
+        // $personal_word->part_of_speechs()->delete(); => this will delete records on parts_of_speeches table
+
+        DB::table('part_of_speechtables')
+        ->where('part_of_speech_able', $personal_word->id)
+        ->delete();
     }
 }
