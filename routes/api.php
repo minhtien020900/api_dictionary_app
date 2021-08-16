@@ -43,7 +43,7 @@ Route::prefix('v1')->group(function () {
             Route::prefix('topic')->group(function () {
 
                 Route::prefix('user')->group(function () {
-                    Route::get('/{user_id}/get-topic', [TopicController::class, 'getUserTopic']);
+                    Route::get('/get-topic', [TopicController::class, 'getUserTopic']);
                     Route::post('/add-topic', [TopicController::class, 'addTopic']);
                     Route::put('/edit-topic', [TopicController::class, 'editTopic']);
                     Route::post('/delete-topic', [TopicController::class, 'deleteTopic']);

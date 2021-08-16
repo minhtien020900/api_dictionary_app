@@ -29,4 +29,9 @@ class PersonalVocabulary extends Model
             'part_of_speechtables',
             'part_of_speech_able');
     }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'personal_vocabulary_id', 'id');
+    }
 }

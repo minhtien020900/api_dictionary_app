@@ -16,6 +16,7 @@ class TopicResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'name'=>$this->name,
             'markup_default'=>$this->markup_default,
             'user'=>new UserResource($this->user),

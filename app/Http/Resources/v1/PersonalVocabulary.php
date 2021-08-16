@@ -22,6 +22,7 @@ class PersonalVocabulary extends JsonResource
             'pronounce' => $this->pronounce,
             'part_of_speech' => PartOfSpeechResource::collection($this->part_of_speechs),
             'example' => ExampleResource::collection($this->examples),
+            'image' => ImageResource::collection($this->images),
             'created_at' => (string)$this->created_at->format('d-m-Y'),
             'updated_at' => (string)$this->updated_at->format('d-m-Y'),
         ];

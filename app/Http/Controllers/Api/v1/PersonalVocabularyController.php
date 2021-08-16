@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\Models\Example;
+use App\Models\Models\Image;
 use App\Models\Models\PartOfSpeech;
 use App\Models\Models\PersonalVocabulary;
 use Illuminate\Http\Request;
@@ -53,6 +54,7 @@ class PersonalVocabularyController extends ApiController
             ],
             'mean' => 'bail|required|string',
             'example_description' => 'bail|required|array',
+            'image' => 'bail|required|array',
             'pronounce' => 'bail|required',
             'part_of_speech_id' => 'bail'
         ]);
@@ -83,6 +85,17 @@ class PersonalVocabularyController extends ApiController
                 $personal_word->examples()->save(
                     new Example([
                             'description' => $desc,
+                            'personal_vocabulary_id' => $personal_word->id,
+                        ]
+                    )
+                );
+            }
+
+            // Save data in table images
+            foreach ($request->image as $desc) {
+                $personal_word->images()->save(
+                    new Image([
+                            'image' => $desc,
                             'personal_vocabulary_id' => $personal_word->id,
                         ]
                     )
@@ -150,6 +163,9 @@ class PersonalVocabularyController extends ApiController
         // delete all example
         $personal_word->examples()->delete();
 
+        // delete all image
+        $personal_word->images()->delete();
+
         // delete all part of speech
         // $personal_word->part_of_speechs()->delete(); => this will delete records on parts_of_speeches table
 
@@ -162,6 +178,17 @@ class PersonalVocabularyController extends ApiController
             $personal_word->examples()->save(
                 new Example([
                         'description' => $desc,
+                        'personal_vocabulary_id' => $personal_word->id,
+                    ]
+                )
+            );
+        }
+
+        // add image instead of edit
+        foreach ($request->image as $desc) {
+            $personal_word->images()->save(
+                new Image([
+                        'image' => $desc,
                         'personal_vocabulary_id' => $personal_word->id,
                     ]
                 )

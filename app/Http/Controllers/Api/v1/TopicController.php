@@ -16,7 +16,7 @@ class TopicController extends ApiController
     //
     public function getUserTopic($user_id)
     {
-        $topics = Topic::where('user_id', $user_id)->get();
+        $topics = Topic::where('user_id', Auth::id())->get();
 
         return TopicResource::collection($topics);
 
