@@ -14,7 +14,7 @@ use Illuminate\Validation\Rule;
 class TopicController extends ApiController
 {
     //
-    public function getUserTopic($user_id)
+    public function getUserTopic()
     {
         $topics = Topic::where('user_id', Auth::id())->get();
 
