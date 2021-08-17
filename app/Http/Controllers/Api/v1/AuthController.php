@@ -67,8 +67,8 @@ class AuthController extends ApiController
     {
         \auth()->user()->tokens()->delete();
         $data = [
-            'message' => 'Tokens Revoked',
+            'message' => 'Logout success',
         ];
-        return $this->sendResponse(config('api_custom.no_have_error'), null, $data,config('api_custom.status_code.201'));
+        return $this->sendResponse(config('api_custom.no_have_error'), null, $data,config('api_custom.status_code.200'));
     }
 }
