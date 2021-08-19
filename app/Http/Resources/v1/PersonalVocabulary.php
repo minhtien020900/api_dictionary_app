@@ -16,6 +16,7 @@ class PersonalVocabulary extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'word' => $this->word,
             'mean' => $this->mean,
             'topic'=>new TopicResource($this->topic),
@@ -23,8 +24,8 @@ class PersonalVocabulary extends JsonResource
             'part_of_speech' => PartOfSpeechResource::collection($this->part_of_speechs),
             'example' => ExampleResource::collection($this->examples),
             'image' => ImageResource::collection($this->images),
-            'created_at' => (string)$this->created_at->format('d-m-Y'),
-            'updated_at' => (string)$this->updated_at->format('d-m-Y'),
+            'created_at' => (string) $this->created_at->format('d-m-Y h:m:s'),
+            'updated_at' => (string)$this->updated_at->format('d-m-Y h:m:s'),
         ];
     }
 }

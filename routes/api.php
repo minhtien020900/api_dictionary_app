@@ -60,6 +60,10 @@ Route::prefix('v1')->group(function () {
             });
         });
 
+        // Route for part of speech
+        Route::prefix('part-of-speech')->group(function (){
+            Route::get('/get',[\App\Http\Controllers\Api\v1\PartOfSpeechController::class,'get']);
+        });
     });
 
 
